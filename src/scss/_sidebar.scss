@@ -1,0 +1,23 @@
+// Sidebar
+
+.sidebar {
+  width: 15%;
+  height: 100vh;
+  border-right: 1px solid $light-grey;
+  header {
+    background-color: $light-grey;
+    margin-top: 50px;
+    padding: 10px $left-margin;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  li {
+    padding: 12px $left-margin;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  li:hover {
+    background-color: $light-grey;
+  }
+}

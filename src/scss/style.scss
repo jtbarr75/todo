@@ -4,34 +4,12 @@
   display: flex;
 }
 
-// Sidebar
-
 $left-margin: 40px;
 $light-blue: rgb(58, 134, 255);
 $ligher-blue: rgb(88, 164, 255);
 $light-grey: rgb(240, 240, 240);
 
-.sidebar {
-  width: 15%;
-  height: 100vh;
-  border-right: 1px solid $light-grey;
-  header {
-    background-color: $light-grey;
-    margin-top: 50px;
-    padding: 10px $left-margin;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  li {
-    padding: 12px $left-margin;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  li:hover {
-    background-color: $light-grey;
-  }
-}
+@import 'sidebar';
 
 .selected {
   color: $light-blue;
