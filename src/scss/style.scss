@@ -1,9 +1,53 @@
 @import 'reset';
 
 #main {
-  margin: 100px auto;
-  width: 960px;
-  height: 960px;
-  background-color: #edddd4;
+  display: flex;
 }
 
+// Sidebar
+
+$left-margin: 40px;
+$light-blue: rgb(58, 134, 255);
+$ligher-blue: rgb(88, 164, 255);
+$light-grey: rgb(240, 240, 240);
+
+.sidebar {
+  width: 15%;
+  height: 100vh;
+  border-right: 1px solid $light-grey;
+  header {
+    background-color: $light-grey;
+    margin-top: 50px;
+    padding: 10px $left-margin;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  li {
+    padding: 12px $left-margin;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  li:hover {
+    background-color: $light-grey;
+  }
+}
+
+.selected {
+  color: $light-blue;
+}
+
+.add-button {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  border-style: none;
+  background-color: $light-blue;
+  color: white;
+  transition: background-color 0.2s;
+  ;
+}
+.add-button:hover {
+  background-color: $ligher-blue;
+  cursor: pointer;
+}
