@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "scss": "node-sass --output-style compressed -o dist src/scss"
+    "scss": "node-sass --output-style compressed -o dist src/scss",
+    "watch:css": "onchange 'src/scss/*.scss' -- npm run scss"
   },
   "repository": {
     "type": "git",
