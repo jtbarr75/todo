@@ -12,7 +12,6 @@
   }
   footer {
      border-top: 1px solid $grey;
-     padding: 25px;
      position: absolute;
      bottom: 0;
      width: 100%;
@@ -40,16 +39,17 @@
 
 .input-group {
   display: flex;
-  padding: 0 20px;
-  input {
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid $grey;
-    width: 100%;
-    margin-right: 20px;
-    padding-left: 20px;
-    &:focus {
-      border: 1px solid $light-blue;
-    }
+  padding: 25px;
+}
+
+#newTaskInput {
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid $grey;
+  width: 100%;
+  margin-right: 20px;
+  padding-left: 20px;
+  &:focus {
+    border: 1px solid $light-blue;
   }
 }

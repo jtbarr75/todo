@@ -1,0 +1,63 @@
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  padding: 20px;
+  li {
+    margin: 5px;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    min-width: 100px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .tag-text {
+      font-size: 11pt;
+      padding-right: 5px;
+    }
+  }
+}
+
+#addTag {
+  border: 1px solid $grey;
+  color: black;
+  justify-content: center;
+  width: 100px;
+  &:hover {
+    cursor: pointer;
+    background-color: $light-grey;
+  }
+}
+
+.remove-tag {
+  height: 20px;
+  padding-left: 5px;
+  border: none;
+  background-color: inherit;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  font-size: 12pt;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#description {
+  margin: 10px 25px;
+  border: none;
+  border-bottom: 1px solid $grey;
+  width: calc(100% - 50px);
+}
+
+#time {
+  margin-left: 10px;
+}

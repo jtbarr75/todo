@@ -2,6 +2,13 @@ $light-blue: rgb(58, 134, 255);
 $lighter-blue: rgb(88, 164, 255);
 $light-grey: rgb(240, 240, 240);
 $grey: rgb(185,185,185);
+$red: #F94144;
+$dark-orange: #F3722C;
+$light-orange: #F8961E;
+$yellow: #F9C74F;
+$light-green: #90BE6D;
+$dark-green: #43AA8B;
+$blue: #577590;
 
 // Main Content
 
@@ -23,6 +30,28 @@ $grey: rgb(185,185,185);
 .selected {
   color: $light-blue;
   font-weight: 700;
+}
+
+.red {
+  background-color: $red;
+}
+.lt-orange {
+  background-color: $light-orange;
+}
+.drk-orange {
+  background-color: $dark-orange;
+}
+.yellow {
+  background-color: $yellow;
+}
+.lt-green {
+  background-color: $light-green;
+}
+.drk-green {
+ background-color: $dark-green;
+}
+.blue {
+  background-color: $blue;
 }
 
 // Buttons
