@@ -118,7 +118,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nclass Element {\n  constructo
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _displayController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayController */ \"./src/js/displayController.js\");\n/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./element */ \"./src/js/element.js\");\n\n\n\n_displayController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].create(new _element__WEBPACK_IMPORTED_MODULE_1__[\"default\"](\"div\", \"#main\", \"test\", \"hello\"));\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _displayController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayController */ \"./src/js/displayController.js\");\n/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./element */ \"./src/js/element.js\");\n\n\n\n// displayController.create(new Element(\"div\", \"#main\", \"test\", \"hello\"));\n\n//# sourceURL=webpack:///./src/js/index.js?");
 
 /***/ })
 

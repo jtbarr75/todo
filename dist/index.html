@@ -12,18 +12,52 @@
     <nav class="sidebar">
       <header>
         <h1 class="sidebar-title selected">Lists</h1>
-        <button id="newList" class="add-button">+</button>
+        <button id="newListButton" class="add-button">+</button>
       </header>
       <ul id="lists">
-        <li id="list1" class="list-title">Today</li>
+        <li id="list1" class="list-title selected">Today</li>
         <li id="list2" class="list-title">Work</li>
         <li id="list3" class="list-title">Personal</li>
         <li id="list4" class="list-title">Groceries</li>
         <li id="list5" class="list-title">Completed</li>
       </ul>
     </nav>
-    <div class="list"></div>
-    <div class="task"></div>
+    <div class="content">
+      <div id="listCard" class="card">
+        <header>
+          <h1 class="card-title">Today</h1>
+        </header>
+        <ul class="list">
+          <li class="list-task">
+            <button class="complete-button"></button>
+            <span>Finish App Styling</span>
+          </li>
+          <li class="list-task selected">
+            <button class="complete-button"></button>
+            <span>Water Plants</span>
+          </li>
+          <li class="list-task">
+            <button class="complete-button"></button>
+            <span>Work Out</span>
+          </li>
+        </ul>
+        <footer>
+          <div class="input-group">
+            <input type="text" id="newTaskInput" placeholder="Add a task...">
+            <button id="newTaskButton" class="add-button">+</button>
+          </div>
+        </footer>
+      </div>
+      <div id="taskCard" class="card">
+        <header>
+          <h1 class="card-title">Water Plants</h1>
+        </header>
+        <ul class="tags">
+          <li class="tag">Plants</li>
+          <li class="tag">Chores</li>
+        </ul>
+      </div>
+    </div>
   </div>
   <script src="main.js"></script>
 </body>
