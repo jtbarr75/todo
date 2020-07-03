@@ -1,0 +1,55 @@
+$light-blue: rgb(58, 134, 255);
+$lighter-blue: rgb(88, 164, 255);
+$light-grey: rgb(240, 240, 240);
+$grey: rgb(185,185,185);
+
+// Main Content
+
+#main {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  min-height: 100vh;
+  background-color: $light-grey;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+// Highlighting
+
+.selected {
+  color: $light-blue;
+  font-weight: 700;
+}
+
+// Buttons
+
+.add-button {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  border-style: none;
+  background-color: $light-blue;
+  color: white;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: $lighter-blue;
+    cursor: pointer;
+  }
+}
+
+.complete-button {
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  border: 1px solid $grey;
+  background-color: white;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: $light-blue;
+    cursor: pointer;
+  }
+}
