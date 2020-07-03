@@ -1,23 +1,38 @@
 // Sidebar
+$left-margin: 40px;
 
 .sidebar {
   width: 275px;
-  height: 100vh;
+  min-height: 100vh;
   border-right: 1px solid $light-grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
   header {
     background-color: $light-grey;
-    margin-top: 50px;
-    padding: 10px $left-margin;
+    border-bottom: 1px solid $grey;
+    padding: 10px 10px 10px $left-margin;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+  h1 {
+    font-size: 22pt;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+  }
+  ul {
+    padding-top: 25px;
+    flex: 1;
+    border-right: 1px solid $grey;
+  }
   li {
     padding: 12px $left-margin;
     cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  li:hover {
-    background-color: $light-grey;
+    transition: background-color 0.2s, color 0.2s;
+    &:hover {
+      background-color: $light-grey;
+      color: $light-blue;
+    }
   }
 }
