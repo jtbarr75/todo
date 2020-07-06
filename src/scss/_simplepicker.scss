@@ -1,0 +1,20 @@
+.simplepicker-day-header {
+  background-color: $blue;
+}
+.simplepicker-date-section,
+.simplepicker-calender tbody .active::after, 
+.simplepicker-calender tbody td:active::after {
+  background-color: $light-blue;
+}
+.simplepicker-btn {
+  color: $light-blue;
+  border-color: $light-blue;
+}
+.simplepicker-btn:active, .simplepicker-btn:hover {
+  color: white;
+  background-color: $light-blue;
+}
+
+.simplepicker-time {
+  font-size: 14pt;
+}

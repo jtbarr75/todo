@@ -66,8 +66,19 @@
   background: none;
   text-align: start;
   color: $grey;
-  padding: 0;
+  padding: 0 5px;
   &:hover {
     cursor: pointer;
   }
+  &.set {
+    color: $light-blue;
+  }
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+  height: 350px;
+  background-color: $light-grey;
+  padding: 5px;
 }
