@@ -2877,19 +2877,7 @@ eval("module.exports=function(e){var t={};function i(n){if(t[n])return t[n].expo
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst displayController = (function() {\n  function create(e) {\n    const element = document.createElement(e.type);\n    if (typeof(e.text) == \"string\") {\n      element.textContent = e.text;\n    }\n    if (typeof(e.src) == \"string\") {\n      element.src = e.src\n    }\n    if (Array.isArray(e.classes)) {\n      element.classList.add(...e.classes);\n    } else if (typeof(e.classes) == \"string\") {\n      element.classList.add(e.classes);\n    }\n    document.querySelector(e.parent).appendChild(element);\n    return element;\n  }\n\n  return {\n    create,\n  }\n})();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (displayController);\n\n//# sourceURL=webpack:///./src/js/displayController.js?");
-
-/***/ }),
-
-/***/ "./src/js/element.js":
-/*!***************************!*\
-  !*** ./src/js/element.js ***!
-  \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nclass Element {\n  constructor(type, parent, classes, text, src) {\n    this.type = type;\n    this.parent = parent || \"#main\";\n    this.text = text;\n    this.src = src;\n    if (Array.isArray(classes)) {\n      this.classes = classes;\n    } else if (typeof(classes) == \"string\") {\n      this.classes = [classes];\n    }\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Element);\n\n//# sourceURL=webpack:///./src/js/element.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _taskList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskList */ \"./src/js/taskList.js\");\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./task */ \"./src/js/task.js\");\n\n\n\nconst displayController = (function() {\n  \n  var lists = [];\n\n  function initialize(){\n    const list1 = new _taskList__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Today\", {});\n    const list2 = new _taskList__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Work\", {});\n    const list3 = new _taskList__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Personal\", {});\n    lists = [list1, list2, list3];\n    renderLists();\n    document.getElementById(\"list1\").classList.add(\"selected\");\n  }\n\n  function renderLists() {\n    for (let i=0; i<lists.length; i++) {\n      if (!document.getElementById(`list${i+1}`)) {\n        var $list = create({\n          type:   \"li\", \n          parent: \"#lists\", \n          id:     `list${i+1}`, \n          class:  \"list-title\", \n          text:   lists[i].name\n        })\n      }\n    }\n  }\n\n  function create(e) {\n    const $element = document.createElement(e.type);\n    if (typeof(e.text) == \"string\") {\n      $element.textContent = e.text;\n    }\n    if (typeof(e.src) == \"string\") {\n      $element.src = e.src\n    }\n    if (typeof(e.id) == \"string\") {\n      $element.id = e.id;\n    }\n    if (Array.isArray(e.classes)) {\n      $element.classList.add(...e.classes);\n    } else if (typeof(e.classes) == \"string\") {\n      $element.classList.add(e.classes);\n    }\n    document.querySelector(e.parent).appendChild($element);\n    return $element;\n  }\n\n  function renderListInput() {\n    const $input = create({\n      type:   \"input\", \n      parent: \"#lists\", \n      id:  \"newListInput\" \n    })\n    $input.focus();\n    return $input\n  }\n\n  function addList(list) {\n    lists.push(list);\n    renderLists();\n  }\n\n  function clearInput() {\n    const $input = document.getElementById(\"newListInput\");\n    $input.parentNode.removeChild($input);\n  }\n\n  return {\n    create,\n    initialize,\n    renderListInput,\n    addList,\n    clearInput,\n\n  }\n})();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (displayController);\n\n//# sourceURL=webpack:///./src/js/displayController.js?");
 
 /***/ }),
 
@@ -2901,7 +2889,31 @@ eval("__webpack_require__.r(__webpack_exports__);\nclass Element {\n  constructo
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _displayController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayController */ \"./src/js/displayController.js\");\n/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./element */ \"./src/js/element.js\");\n/* harmony import */ var simplepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! simplepicker */ \"./node_modules/simplepicker/dist/simplepicker.node.js\");\n/* harmony import */ var simplepicker__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(simplepicker__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ \"./node_modules/date-fns/esm/index.js\");\n\n\n\n\n\n// displayController.create(new Element(\"div\", \"#main\", \"test\", \"hello\"));\n\nconst taskCard = document.querySelector(\"#taskCard\");\nconst picker = new simplepicker__WEBPACK_IMPORTED_MODULE_2___default.a(taskCard, {\n  zIndex: 10,\n  compactMode: true\n});\nconst dueButton = document.getElementById(\"due\");\ndueButton.addEventListener(\"click\", (e) => {\n  picker.reset(new Date);\n  picker.open();\n})\npicker.on(\"submit\", function (date, readableDate) {\n  var input = document.querySelector(\"#due\");\n  input.classList.add(\"set\");\n  if (Object(date_fns__WEBPACK_IMPORTED_MODULE_3__[\"isToday\"])(date)) {\n    var message = \"Today\";\n  }\n  input.value = `Due ${Object(date_fns__WEBPACK_IMPORTED_MODULE_3__[\"format\"])(date, 'MMMM d')} at ${Object(date_fns__WEBPACK_IMPORTED_MODULE_3__[\"format\"])(date, 'h:mm a')}`;\n})\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _displayController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayController */ \"./src/js/displayController.js\");\n/* harmony import */ var _taskList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./taskList */ \"./src/js/taskList.js\");\n/* harmony import */ var simplepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! simplepicker */ \"./node_modules/simplepicker/dist/simplepicker.node.js\");\n/* harmony import */ var simplepicker__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(simplepicker__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ \"./node_modules/date-fns/esm/index.js\");\n\n\n// import Task from \"./task\";\n\n\n\n_displayController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].initialize();\n\nconst simplepicker = (function() {\n\n  function update() {\n    const picker = createPicker();\n    addOpenListener(picker);\n    updateDateListener(picker);\n  }\n\n  function createPicker() {\n    const taskCard = document.querySelector(\"#taskCard\");\n    const picker = new simplepicker__WEBPACK_IMPORTED_MODULE_2___default.a(taskCard, {\n      zIndex: 10,\n      compactMode: true\n    });\n    return picker;\n  }\n  \n  function addOpenListener(picker) {\n    const dueButton = document.getElementById(\"due\");\n    dueButton.addEventListener(\"click\", (e) => {\n      picker.reset(new Date);\n      picker.open();\n    })\n  }\n  \n  function updateDateListener(picker) {\n    picker.on(\"submit\", function (date, readableDate) {\n      var input = document.querySelector(\"#due\");\n      input.classList.add(\"set\");\n      if (Object(date_fns__WEBPACK_IMPORTED_MODULE_3__[\"isToday\"])(date)) {\n        var message = \"Today\";\n      }\n      input.value = `Due ${Object(date_fns__WEBPACK_IMPORTED_MODULE_3__[\"format\"])(date, 'MMMM d')} at ${Object(date_fns__WEBPACK_IMPORTED_MODULE_3__[\"format\"])(date, 'h:mm a')}`;\n    })\n  }\n\n  return {\n    update\n  }\n  \n})();\n\nconst buttonController = (function()  {\n\n  const $newListButton = document.getElementById('newListButton');\n  $newListButton.addEventListener(\"click\", () => {\n    createListInput();\n  })\n\n  function createListInput() {\n    const $listInput = _displayController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].renderListInput();\n    $listInput.addEventListener(\"keyup\", (e) => {\n      if (e.keyCode == '13') {\n        _displayController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].addList(new _taskList__WEBPACK_IMPORTED_MODULE_1__[\"default\"](e.target.value))\n        _displayController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].clearInput();\n      }\n    })\n    $listInput.addEventListener(\"blur\", (e) => {\n      _displayController__WEBPACK_IMPORTED_MODULE_0__[\"default\"].clearInput();\n    })\n  }\n\n})();\n\nsimplepicker.update();\n\n\n//# sourceURL=webpack:///./src/js/index.js?");
+
+/***/ }),
+
+/***/ "./src/js/task.js":
+/*!************************!*\
+  !*** ./src/js/task.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass Task {\n  constructor(name) {\n    this.name = name;\n    this.tags = [];\n    this.notes = \"\";\n  }\n\n  setDate(d) { \n    this.date = d;\n  }\n\n  setName(n) {\n    this.name = n;\n  }\n\n  addTag(tag){\n    this.tags.add(tag);\n  }\n\n  removeTag(tag){\n    this.tags = tags.filter( (e) => { return e !== tag } )\n  }\n\n  setNotes(n) {\n    this.notes = n;\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Task);\n\n//# sourceURL=webpack:///./src/js/task.js?");
+
+/***/ }),
+
+/***/ "./src/js/taskList.js":
+/*!****************************!*\
+  !*** ./src/js/taskList.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass TaskList {\n  constructor(name, tasks = {}) {\n    this.name = name;\n    this.tasks = tasks;\n  }\n\n  add(task) {\n    this.tasks[task.name] = task;\n  }\n\n  remove(taskName) {\n    this.tasks[taskName] = null;\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (TaskList);\n\n//# sourceURL=webpack:///./src/js/taskList.js?");
 
 /***/ })
 

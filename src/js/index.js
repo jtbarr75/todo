@@ -1,25 +1,73 @@
 import displayController from "./displayController";
-import Element from "./element";
+import TaskList from "./taskList";
+// import Task from "./task";
 import Simplepicker from 'simplepicker';
 import { format, isToday } from 'date-fns';
 
-// displayController.create(new Element("div", "#main", "test", "hello"));
+displayController.initialize();
 
-const taskCard = document.querySelector("#taskCard");
-const picker = new Simplepicker(taskCard, {
-  zIndex: 10,
-  compactMode: true
-});
-const dueButton = document.getElementById("due");
-dueButton.addEventListener("click", (e) => {
-  picker.reset(new Date);
-  picker.open();
-})
-picker.on("submit", function (date, readableDate) {
-  var input = document.querySelector("#due");
-  input.classList.add("set");
-  if (isToday(date)) {
-    var message = "Today";
+const simplepicker = (function() {
+
+  function update() {
+    const picker = createPicker();
+    addOpenListener(picker);
+    updateDateListener(picker);
   }
-  input.value = `Due ${format(date, 'MMMM d')} at ${format(date, 'h:mm a')}`;
-})
+
+  function createPicker() {
+    const taskCard = document.querySelector("#taskCard");
+    const picker = new Simplepicker(taskCard, {
+      zIndex: 10,
+      compactMode: true
+    });
+    return picker;
+  }
+  
+  function addOpenListener(picker) {
+    const dueButton = document.getElementById("due");
+    dueButton.addEventListener("click", (e) => {
+      picker.reset(new Date);
+      picker.open();
+    })
+  }
+  
+  function updateDateListener(picker) {
+    picker.on("submit", function (date, readableDate) {
+      var input = document.querySelector("#due");
+      input.classList.add("set");
+      if (isToday(date)) {
+        var message = "Today";
+      }
+      input.value = `Due ${format(date, 'MMMM d')} at ${format(date, 'h:mm a')}`;
+    })
+  }
+
+  return {
+    update
+  }
+  
+})();
+
+const buttonController = (function()  {
+
+  const $newListButton = document.getElementById('newListButton');
+  $newListButton.addEventListener("click", () => {
+    createListInput();
+  })
+
+  function createListInput() {
+    const $listInput = displayController.renderListInput();
+    $listInput.addEventListener("keyup", (e) => {
+      if (e.keyCode == '13') {
+        displayController.addList(new TaskList(e.target.value))
+        displayController.clearInput();
+      }
+    })
+    $listInput.addEventListener("blur", (e) => {
+      displayController.clearInput();
+    })
+  }
+
+})();
+
+simplepicker.update();

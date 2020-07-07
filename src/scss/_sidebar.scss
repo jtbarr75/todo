@@ -36,3 +36,13 @@ $left-margin: 40px;
     }
   }
 }
+
+#newListInput {
+  margin: 12px $left-margin;
+  width: calc(100% - 80px);
+  padding: 3px 0px 3px 3px;
+  &:focus {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+  }
+}
