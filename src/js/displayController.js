@@ -164,10 +164,12 @@ const displayController = (function() {
   }
 
   function selectList(name) {
-    selectedList = lists[name.substr(-1)];
-    clearList();
-    renderList();
-    renderLists();
+    if (selectedList !== lists[name.substr(-1)]) {
+      selectedList = lists[name.substr(-1)];
+      clearList();
+      renderList();
+      renderLists();
+    }
   }
 
   function clearList() {
@@ -191,9 +193,11 @@ const displayController = (function() {
   }
 
   function selectTask(name) {
-    selectedTask = selectedList.tasks[name.substr(-1)];
-    renderTask();
-    renderList();
+    if (selectedTask !== selectedList.tasks[name.substr(-1)]) {
+      selectedTask = selectedList.tasks[name.substr(-1)];
+      renderTask();
+      renderList();
+    }
   }
 
   return {
