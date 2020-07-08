@@ -1,5 +1,9 @@
 .simplepicker-day-header {
-  background-color: $blue;
+  background-color: white;
+  color: $light-blue;
+  font-weight: 700;
+  font-size: 12pt;
+  padding: 6px 0 ;
 }
 .simplepicker-date-section,
 .simplepicker-calender tbody .active::after, 

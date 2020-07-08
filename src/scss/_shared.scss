@@ -1,14 +1,13 @@
-$light-blue: rgb(58, 134, 255);
-$lighter-blue: rgb(88, 164, 255);
+$light-blue: rgb(0, 161, 228);
+$lighter-blue: rgb(30, 191, 248);
 $light-grey: rgb(240, 240, 240);
 $grey: rgb(185,185,185);
-$red: #F94144;
+$red: rgb(156, 56, 72);
 $dark-orange: #F3722C;
 $light-orange: #F8961E;
-$yellow: #F9C74F;
-$light-green: #90BE6D;
-$dark-green: #43AA8B;
-$blue: #577590;
+$yellow: #F5B700;
+$green: #04e762;
+$blue: #1e3888;
 
 // Main Content
 
@@ -44,14 +43,25 @@ $blue: #577590;
 .yellow {
   background-color: $yellow;
 }
-.lt-green {
-  background-color: $light-green;
-}
-.drk-green {
- background-color: $dark-green;
+.green {
+  background-color: $green;
 }
 .blue {
   background-color: $blue;
+}
+
+// Focus
+
+@mixin glow {
+  box-shadow: 0 0 5px $light-blue;
+  border: 1px solid $light-blue;
+}
+
+// Hover
+
+@mixin hover($color) {
+  background-color: lighten($color, 12%);
+  cursor: pointer;
 }
 
 // Buttons
@@ -65,8 +75,7 @@ $blue: #577590;
   color: white;
   transition: background-color 0.2s;
   &:hover {
-    background-color: $lighter-blue;
-    cursor: pointer;
+    @include hover($light-blue);
   }
 }
 
@@ -78,7 +87,6 @@ $blue: #577590;
   background-color: white;
   transition: background-color 0.2s;
   &:hover {
-    background-color: $light-blue;
-    cursor: pointer;
+    @include hover($light-blue);
   }
 }
