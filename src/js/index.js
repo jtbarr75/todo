@@ -63,7 +63,7 @@ const buttonController = (function()  {
       if (e.keyCode == '13') {
         displayController.addList(new TaskList(e.target.value))
         displayController.clearInput();
-        addListListener(document.getElementById("lists".lastChild));
+        addListListener(document.getElementById("lists").lastChild);
       }
     })
     $listInput.addEventListener("blur", (e) => {
