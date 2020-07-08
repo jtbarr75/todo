@@ -2,7 +2,7 @@ import displayController from "./displayController";
 import TaskList from "./taskList";
 // import Task from "./task";
 import Simplepicker from 'simplepicker';
-import { format, isToday } from 'date-fns';
+
 
 displayController.initialize();
 
@@ -33,12 +33,7 @@ const simplepicker = (function() {
   
   function updateDateListener(picker) {
     picker.on("submit", function (date, readableDate) {
-      var input = document.querySelector("#due");
-      input.classList.add("set");
-      if (isToday(date)) {
-        var message = "Today";
-      }
-      input.value = `Due ${format(date, 'MMMM d')} at ${format(date, 'h:mm a')}`;
+      displayController.renderDate(date);
     })
   }
 
@@ -53,6 +48,8 @@ const buttonController = (function()  {
   listenForNewList();
   listenForLists();
   listenForNewTask();
+  listenForTasks();
+  listenForNotes();
 
   function listenForNewList() {
     const $newListButton = document.getElementById('newListButton');
@@ -87,6 +84,7 @@ const buttonController = (function()  {
     $target.addEventListener("click", (e) => {
       displayController.selectList(e.target.id);
       listenForNewTask();
+      listenForTasks();
     })
   }
 
@@ -95,23 +93,44 @@ const buttonController = (function()  {
     const $newTaskButton = document.getElementById("newTaskButton");
     $newTaskInput.addEventListener("keyup", (e) => {
       if (e.keyCode == '13') {
-        if (e.target.value.length !== 0 && !!e.target.value.trim()) {
-          displayController.addTask(e.target.value);
-        }
-        e.target.value = "";
+        addTask();
       }
     })
     $newTaskButton.addEventListener("click", (e) => {
-      const $newTaskInput = document.getElementById("newTaskInput");
-      const value = $newTaskInput.value;
-      if (value.length !== 0 && !!value.trim()) {
-        displayController.addTask(value);
-      }
-      $newTaskInput.value = "";
+      addTask();
     })
   }
 
+  function addTask() {
+    const $newTaskInput = document.getElementById("newTaskInput");
+    const value = $newTaskInput.value;
+    if (value.length !== 0 && !!value.trim()) {
+      displayController.addTask(value);
+      listenForTasks();
+    }
+    $newTaskInput.value = "";
+  }
 
+  function listenForTasks() {
+    var tasks = displayController.getTasks();
+    for (let i=0; i<tasks.length; i++) {
+      var $taskButton = document.getElementById(`task${i}`);
+      addTaskListener($taskButton);
+    }
+  }
+
+  function addTaskListener($target) {
+    $target.addEventListener("click", (e) => {
+      displayController.selectTask(e.target.closest("li").id);
+    })
+  }
+
+  function listenForNotes() {
+    const $saveNotes = document.getElementById("saveNotes");
+    $saveNotes.addEventListener("click", (e) => {
+      displayController.saveNotes();
+    })
+  }
 
 })();
 

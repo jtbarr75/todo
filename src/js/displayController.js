@@ -1,5 +1,6 @@
 import TaskList from "./taskList";
 import Task from "./task";
+import { format, isToday } from 'date-fns';
 
 const displayController = (function() {
   
@@ -15,12 +16,14 @@ const displayController = (function() {
     lists = [selectedList, new TaskList("Work"), new TaskList("Personal")];
     renderLists();
     renderList();
+    renderTask();
   }
 
   function renderLists() {
     for (let i=0; i<lists.length; i++) {
-      if (!document.getElementById(`list${i}`)) {
-        create({
+      var $list = document.getElementById(`list${i}`);
+      if (!$list) {
+        $list = create({
           type:   "li", 
           parent: "#lists", 
           id:     `list${i}`, 
@@ -28,8 +31,10 @@ const displayController = (function() {
           text:   lists[i].name
         })
       }
-      if (lists[i] == selectedList) {
-        document.getElementById(`list${i}`).classList.add("selected");
+      if ($list.classList.contains("selected")) {
+        $list.classList.remove("selected");
+      } else if (lists[i] == selectedList) {
+        $list.classList.add("selected");
       }
     }
   }
@@ -39,8 +44,9 @@ const displayController = (function() {
     $listTitle.textContent = selectedList.name;
     for (let i=0; i<selectedList.tasks.length; i++) {
       var task = selectedList.tasks[i];
-      if (!document.getElementById(`task${i}`)) {
-        var $taskWrapper = create({
+      var $task = document.getElementById(`task${i}`);
+      if (!$task) {
+          $task = create({
           type: "li",
           class: "list-task",
           parent: ".list",
@@ -49,18 +55,68 @@ const displayController = (function() {
         create({
           type: "button",
           class: "complete-button",
-          parent: $taskWrapper
+          parent: $task
         })
         create({
           type: "span",
-          parent: $taskWrapper,
+          parent: $task,
           text: task.name
         })
-        if (task == selectedTask) {
-          document.getElementById(`task${i}`).classList.add("selected");
-        }
+      }
+      if ($task.classList.contains("selected")) {
+        $task.classList.remove("selected");
+      } else if (task == selectedTask) {
+        $task.classList.add("selected");
       }
     }
+  }
+
+  function renderTask() {
+    const $taskTitle = document.getElementById("taskTitle");
+    $taskTitle.textContent = selectedTask.name;
+    if (selectedTask.date) {
+      renderDate(selectedTask.date);
+    } else {
+      clearDate();
+    }
+    if (selectedTask.notes) {
+      renderNotes();
+    } else {
+      clearNotes();
+    }
+  }
+
+  function renderDate(date) {
+    selectedTask.setDate(date);
+    var input = document.querySelector("#due");
+    input.classList.add("set");
+    var message = format(date, 'MMMM d');
+    if (isToday(date)) {
+      message = "Today";
+    }
+    input.value = `Due ${message} at ${format(date, 'h:mm a')}`;
+  }
+
+  function clearDate() {
+    var $input = document.querySelector("#due");
+    $input.classList.remove("set");
+    $input.value = "Add a due date...";
+  }
+
+  function renderNotes() {
+    var $notes = document.getElementById("notes");
+    $notes.value = selectedTask.notes;
+  }
+
+  function clearNotes() {
+    var $notes = document.getElementById("notes");
+    $notes.value = "";
+  }
+
+  function saveNotes() {
+    var $notes = document.getElementById("notes");
+    console.log(`Saved: ${$notes.value}`);
+    selectedTask.setNotes($notes.value);
   }
 
   function create(e) {
@@ -112,6 +168,7 @@ const displayController = (function() {
     selectedList = lists[name.substr(-1)];
     clearList();
     renderList();
+    renderLists();
   }
 
   function clearList() {
@@ -130,6 +187,16 @@ const displayController = (function() {
     renderList();
   }
 
+  function getTasks() {
+    return selectedList.tasks;
+  }
+
+  function selectTask(name) {
+    selectedTask = selectedList.tasks[name.substr(-1)];
+    renderTask();
+    renderList();
+  }
+
   return {
     create,
     initialize,
@@ -138,7 +205,12 @@ const displayController = (function() {
     clearInput,
     selectList,
     getLists,
-    addTask
+    addTask,
+    renderTask,
+    getTasks,
+    selectTask,
+    renderDate,
+    saveNotes,
 
   }
 })();
