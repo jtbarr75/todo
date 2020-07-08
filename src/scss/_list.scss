@@ -7,8 +7,12 @@
   border-radius: 5px;
   position: relative;
   header {
+    background-color: $light-blue;
+    color: white;
     border-bottom: 1px solid $grey;
     padding: 25px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   footer {
      border-top: 1px solid $grey;
@@ -49,6 +53,11 @@
       margin: 0 20px 0 70px;
     }
   }
+}
+
+.list {
+  height: 435px;
+  overflow: auto;
 }
 
 .input-group {
