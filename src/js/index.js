@@ -55,18 +55,36 @@ const buttonController = (function()  {
     createListInput();
   })
 
+  listenForSidebarClicks();
+
   function createListInput() {
     const $listInput = displayController.renderListInput();
     $listInput.addEventListener("keyup", (e) => {
       if (e.keyCode == '13') {
         displayController.addList(new TaskList(e.target.value))
         displayController.clearInput();
+        addListListener(document.getElementById("lists".lastChild));
       }
     })
     $listInput.addEventListener("blur", (e) => {
       displayController.clearInput();
     })
   }
+
+  function listenForSidebarClicks() {
+    var lists = displayController.getLists();
+    for (let i=0; i<lists.length; i++) {
+      var $listButton = document.getElementById(`list${i}`)
+      addListListener($listButton);
+    }
+  }
+
+  function addListListener($target) {
+    $target.addEventListener("click", (e) => {
+      displayController.selectList(e.target.id);
+    })
+  }
+
 
 })();
 

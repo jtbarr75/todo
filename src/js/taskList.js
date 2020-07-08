@@ -1,15 +1,15 @@
 class TaskList {
-  constructor(name, tasks = {}) {
+  constructor(name, tasks = []) {
     this.name = name;
     this.tasks = tasks;
   }
 
   add(task) {
-    this.tasks[task.name] = task;
+    this.tasks.push(task);
   }
 
   remove(taskName) {
-    this.tasks[taskName] = null;
+    this.tasks = tasks.filter( (e) => { return e.name !== taskName } )
   }
 }
 
