@@ -50,12 +50,16 @@ const simplepicker = (function() {
 
 const buttonController = (function()  {
 
-  const $newListButton = document.getElementById('newListButton');
-  $newListButton.addEventListener("click", () => {
-    createListInput();
-  })
+  listenForNewList();
+  listenForLists();
+  listenForNewTask();
 
-  listenForSidebarClicks();
+  function listenForNewList() {
+    const $newListButton = document.getElementById('newListButton');
+    $newListButton.addEventListener("click", () => {
+      createListInput();
+    })
+  }
 
   function createListInput() {
     const $listInput = displayController.renderListInput();
@@ -71,7 +75,7 @@ const buttonController = (function()  {
     })
   }
 
-  function listenForSidebarClicks() {
+  function listenForLists() {
     var lists = displayController.getLists();
     for (let i=0; i<lists.length; i++) {
       var $listButton = document.getElementById(`list${i}`)
@@ -82,8 +86,31 @@ const buttonController = (function()  {
   function addListListener($target) {
     $target.addEventListener("click", (e) => {
       displayController.selectList(e.target.id);
+      listenForNewTask();
     })
   }
+
+  function listenForNewTask() {
+    const $newTaskInput = document.getElementById("newTaskInput");
+    const $newTaskButton = document.getElementById("newTaskButton");
+    $newTaskInput.addEventListener("keyup", (e) => {
+      if (e.keyCode == '13') {
+        if (e.target.value.length !== 0 && !!e.target.value.trim()) {
+          displayController.addTask(e.target.value);
+        }
+        e.target.value = "";
+      }
+    })
+    $newTaskButton.addEventListener("click", (e) => {
+      const $newTaskInput = document.getElementById("newTaskInput");
+      const value = $newTaskInput.value;
+      if (value.length !== 0 && !!value.trim()) {
+        displayController.addTask(value);
+      }
+      $newTaskInput.value = "";
+    })
+  }
+
 
 
 })();

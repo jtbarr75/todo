@@ -39,24 +39,26 @@ const displayController = (function() {
     $listTitle.textContent = selectedList.name;
     for (let i=0; i<selectedList.tasks.length; i++) {
       var task = selectedList.tasks[i];
-      var $taskWrapper = create({
-        type: "li",
-        class: "list-task",
-        parent: ".list",
-        id: `task${i}`
-      });
-      create({
-        type: "button",
-        class: "complete-button",
-        parent: $taskWrapper
-      })
-      create({
-        type: "span",
-        parent: $taskWrapper,
-        text: task.name
-      })
-      if (task == selectedTask) {
-        document.getElementById(`task${i}`).classList.add("selected");
+      if (!document.getElementById(`task${i}`)) {
+        var $taskWrapper = create({
+          type: "li",
+          class: "list-task",
+          parent: ".list",
+          id: `task${i}`
+        });
+        create({
+          type: "button",
+          class: "complete-button",
+          parent: $taskWrapper
+        })
+        create({
+          type: "span",
+          parent: $taskWrapper,
+          text: task.name
+        })
+        if (task == selectedTask) {
+          document.getElementById(`task${i}`).classList.add("selected");
+        }
       }
     }
   }
@@ -123,6 +125,11 @@ const displayController = (function() {
     return lists;
   }
 
+  function addTask(name) {
+    selectedList.add(new Task(name));
+    renderList();
+  }
+
   return {
     create,
     initialize,
@@ -131,6 +138,7 @@ const displayController = (function() {
     clearInput,
     selectList,
     getLists,
+    addTask
 
   }
 })();
