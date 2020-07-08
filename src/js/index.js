@@ -45,6 +45,8 @@ const simplepicker = (function() {
 
 const buttonController = (function()  {
 
+  var editing = false;
+
   listenForNewList();
   listenForLists();
   listenForNewTask();
@@ -126,8 +128,24 @@ const buttonController = (function()  {
   }
 
   function listenForNotes() {
+    listenForSave();
+    listenForEditNotes();
+  }
+
+  function listenForEditNotes() {
+    const $notes = document.getElementById("notes");
+    $notes.addEventListener("keyup", (e) => {
+      if (editing == false) {
+        editing = true;
+        displayController.updateSaveButton("Save Notes");
+      } 
+    })
+  }
+
+  function listenForSave() {
     const $saveNotes = document.getElementById("saveNotes");
     $saveNotes.addEventListener("click", (e) => {
+      editing = false;
       displayController.saveNotes();
     })
   }

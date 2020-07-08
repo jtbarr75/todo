@@ -115,8 +115,18 @@ const displayController = (function() {
 
   function saveNotes() {
     var $notes = document.getElementById("notes");
-    console.log(`Saved: ${$notes.value}`);
     selectedTask.setNotes($notes.value);
+    updateSaveButton("Saved");
+  }
+
+  function updateSaveButton(message) {
+    const $save = document.getElementById("saveNotes");
+    $save.textContent = message;
+    if (message == "Save Notes") {
+      $save.classList.add("yellow");
+    } else {
+      $save.classList.remove("yellow");
+    }
   }
 
   function create(e) {
@@ -211,6 +221,7 @@ const displayController = (function() {
     selectTask,
     renderDate,
     saveNotes,
+    updateSaveButton,
 
   }
 })();
