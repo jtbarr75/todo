@@ -96,6 +96,7 @@ textarea {
 .task-button {
   width: 175px;
   height: 50px;
+  font-size: 14pt;
   background-color: $light-blue;
   color: white;
   border: none;
@@ -110,5 +111,11 @@ textarea {
   background-color: $green;
   &:hover {
     @include hover($green);
+  }
+  &.completed {
+    background-color: $grey;
+    &:hover {
+      @include hover($grey);
+    }
   }
 }

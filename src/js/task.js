@@ -3,6 +3,7 @@ class Task {
     this.name = name;
     this.tags = [];
     this.notes = "";
+    this.completed = false;
   }
 
   setDate(d) { 
@@ -23,6 +24,10 @@ class Task {
 
   setNotes(n) {
     this.notes = n;
+  }
+
+  toggleCompleted() {
+    this.completed = (this.completed ? false : true);
   }
 }
 

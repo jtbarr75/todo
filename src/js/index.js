@@ -43,13 +43,14 @@ const simplepicker = (function() {
   
 })();
 
-const buttonController = (function()  {
+const eventController = (function()  {
 
   listenForNewList();
-  listenForLists();
+  listenForSwitchLists();
   listenForNewTask();
   listenForTasks();
   listenForNotes();
+  listenForComplete();
 
   function listenForNewList() {
     const $newListButton = document.getElementById('newListButton');
@@ -72,7 +73,7 @@ const buttonController = (function()  {
     })
   }
 
-  function listenForLists() {
+  function listenForSwitchLists() {
     var lists = displayController.getLists();
     for (let i=0; i<lists.length; i++) {
       var $listButton = document.getElementById(`list${i}`)
@@ -85,6 +86,7 @@ const buttonController = (function()  {
       displayController.selectList(e.target.id);
       listenForNewTask();
       listenForTasks();
+      listenForComplete();
     })
   }
 
@@ -107,6 +109,7 @@ const buttonController = (function()  {
     if (value.length !== 0 && !!value.trim()) {
       displayController.addTask(value);
       listenForTasks();
+      listenForComplete();
     }
     $newTaskInput.value = "";
   }
@@ -129,6 +132,21 @@ const buttonController = (function()  {
     const $notes = document.getElementById("notes");
     $notes.addEventListener("blur", (e) => {
       displayController.saveNotes();
+    })
+  }
+
+  function listenForComplete() {
+    var tasks = displayController.getTasks();
+    for (let i=0; i<tasks.length; i++) {
+      var $complete = document.getElementById(`complete${i}`);
+      addCompleteListener($complete);
+    }
+  }
+
+  function addCompleteListener($target) {
+    $target.addEventListener("click", (e) => {
+      displayController.complete(e.target);
+      e.stopPropagation();
     })
   }
 

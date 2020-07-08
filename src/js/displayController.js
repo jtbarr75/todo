@@ -31,10 +31,10 @@ const displayController = (function() {
           text:   lists[i].name
         })
       }
-      if ($list.classList.contains("selected")) {
-        $list.classList.remove("selected");
-      } else if (lists[i] == selectedList) {
+      if (lists[i] == selectedList) {
         $list.classList.add("selected");
+      } else if ($list.classList.contains("selected")) {
+        $list.classList.remove("selected");
       }
     }
   }
@@ -55,7 +55,8 @@ const displayController = (function() {
         create({
           type: "button",
           class: "complete-button",
-          parent: $task
+          parent: $task,
+          id: `complete${i}`
         })
         create({
           type: "span",
@@ -63,10 +64,15 @@ const displayController = (function() {
           text: task.name
         })
       }
-      if ($task.classList.contains("selected")) {
-        $task.classList.remove("selected");
-      } else if (task == selectedTask) {
+      if (task == selectedTask) {
         $task.classList.add("selected");
+      } else if ($task.classList.contains("selected")) {
+        $task.classList.remove("selected");
+      }
+      if (task.completed) {
+        $task.classList.add("complete");
+      } else {
+        $task.classList.remove("complete");
       }
     }
   }
@@ -200,6 +206,14 @@ const displayController = (function() {
     }
   }
 
+  function complete($button) {
+    var task = selectedList.tasks[$button.id.substr(-1)]
+    task.toggleCompleted();
+    $button.classList.toggle("complete");
+    renderList();
+  }
+
+
   return {
     create,
     initialize,
@@ -214,6 +228,7 @@ const displayController = (function() {
     selectTask,
     renderDate,
     saveNotes,
+    complete,
 
   }
 })();
