@@ -9,7 +9,7 @@ class TaskList {
   }
 
   remove(task) {
-    this.tasks = tasks.filter( (e) => { return e !== task } )
+    this.tasks = this.tasks.filter( (e) => { return e !== task } )
   }
 
   indexOf(item) {

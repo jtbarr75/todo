@@ -17,6 +17,7 @@ const eventController = (function()  {
     listenForComplete();
     listenForActions();
     listenForClose();
+    listenForDelete();
   }
   
 
@@ -144,18 +145,14 @@ const eventController = (function()  {
   function actionOpen(type) {
     const $actionButton = document.getElementById(`${type}Actions`);
     $actionButton.addEventListener("click", () => {
-      const $menu = document.getElementById(`${type}Menu`);
-      $menu.classList.add("open");
+      displayController.openMenu(type);
     })
   }
 
   function actionClose(type) {
     document.addEventListener("click", (e) => {
-      const $menu = document.getElementById(`${type}Menu`);
       if (e.target.parentElement.id != `${type}Menu` && e.target.id != `${type}Actions`) {
-        if ($menu.classList.contains("open")) {
-          $menu.classList.remove("open");
-        }
+        displayController.closeMenu(type);
       }
     })
   }

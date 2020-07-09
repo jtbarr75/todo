@@ -237,6 +237,7 @@ const displayController = (function() {
     const $task = document.getElementById("taskCard");
     $task.classList.remove("open");
     selectedTask = "";
+    closeMenu("task");
     renderList();
   }
 
@@ -257,6 +258,27 @@ const displayController = (function() {
     const $list = document.getElementById("listCard");
     $list.classList.add("open");
   }
+
+  function deleteTask() {
+    const $task = document.getElementById(`task${selectedList.indexOf(selectedTask)}`);
+    $task.parentElement.removeChild($task);
+    selectedList.remove(selectedTask);
+    closeTask();
+    saveLists();
+  }
+
+  function closeMenu(type) {
+    const $menu = document.getElementById(`${type}Menu`);
+    if ($menu.classList.contains("open")) {
+      $menu.classList.remove("open");
+    }
+  }
+
+  function openMenu(type) {
+    const $menu = document.getElementById(`${type}Menu`);
+    $menu.classList.add("open");
+  }
+
 
   // Save and Load
 
@@ -307,7 +329,12 @@ const displayController = (function() {
     closeTask,
     openTask,
     closeList,
-    openList
+    openList,
+    deleteTask,
+    deleteList,
+    openMenu,
+    closeMenu,
+
   }
 })();
 
