@@ -18,13 +18,16 @@
       </ul>
     </nav>
     <div class="content">
-      <div id="listCard" class="card">
+      <div id="listCard" class="card open">
         <header>
           <h1 id="listTitle" class="card-title"></h1>
-          <span id="listActions" class="material-icons">more_horiz</span>
+          <div class="icons">
+            <span id="listActions" class="material-icons">more_horiz</span>
+            <span id="closeList" class="material-icons">close</span>
+          </div>
           <div id="listMenu" class="actions-menu">
             <span class="action-button">Edit</span>
-            <span class="action-button">Delete</span>
+            <span id="deleteList" class="action-button">Delete</span>
           </div>
         </header>
         <ul class="list">
@@ -36,13 +39,16 @@
           </div>
         </footer>
       </div>
-      <div id="taskCard" class="card">
+      <div id="taskCard" class="card open">
         <header>
           <h1 id="taskTitle" class="card-title"></h1>
-          <span id="taskActions" class="material-icons">more_horiz</span>
+          <div class="icons">
+            <span id="taskActions" class="material-icons">more_horiz</span>
+            <span id="closeTask" class="material-icons">close</span>
+          </div>
           <div id="taskMenu" class="actions-menu">
             <span class="action-button">Edit</span>
-            <span class="action-button">Delete</span>
+            <span is="deleteTask" class="action-button">Delete</span>
           </div>
         </header>
         <!-- Tags 

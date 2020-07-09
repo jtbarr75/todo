@@ -16,6 +16,7 @@ const eventController = (function()  {
     listenForNotes();
     listenForComplete();
     listenForActions();
+    listenForClose();
   }
   
 
@@ -156,6 +157,32 @@ const eventController = (function()  {
           $menu.classList.remove("open");
         }
       }
+    })
+  }
+
+  function listenForClose() {
+    listenForCloseTask();
+    listenForCloseList();
+  }
+
+  function listenForCloseTask() {
+    const $closeTask = document.getElementById("closeTask");
+    $closeTask.addEventListener("click", (e) => {
+      displayController.closeTask();
+    })
+  }
+
+  function listenForCloseList() {
+    const $closeList = document.getElementById("closeList");
+    $closeList.addEventListener("click", (e) => {
+      displayController.closeList();
+    })
+  }
+
+  function listenForDelete() {
+    const $deleteTask = document.getElementById("deleteTask");
+    $deleteTask.addEventListener("click", (e) => {
+      displayController.deleteTask();
     })
   }
 

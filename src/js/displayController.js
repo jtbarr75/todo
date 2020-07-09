@@ -190,6 +190,8 @@ const displayController = (function() {
       clearList();
       renderList();
       renderLists();
+      closeTask();
+      openList();
     }
   }
 
@@ -219,6 +221,7 @@ const displayController = (function() {
       selectedTask = selectedList.tasks[name.substr(-1)];
       renderTask();
       renderList();
+      openTask();
     }
   }
 
@@ -229,6 +232,33 @@ const displayController = (function() {
     saveLists();
     renderList();
   }
+
+  function closeTask() {
+    const $task = document.getElementById("taskCard");
+    $task.classList.remove("open");
+    selectedTask = "";
+    renderList();
+  }
+
+  function openTask() {
+    const $task = document.getElementById("taskCard");
+    $task.classList.add("open");
+  }
+
+  function closeList() {
+    closeTask();
+    const $list = document.getElementById("listCard");
+    $list.classList.remove("open");
+    selectedList = "";
+    renderLists();
+  }
+
+  function openList() {
+    const $list = document.getElementById("listCard");
+    $list.classList.add("open");
+  }
+
+  // Save and Load
 
   function saveLists() {
     localStorage.lists = JSON.stringify(lists);
@@ -274,7 +304,10 @@ const displayController = (function() {
     complete,
     updateSaveButton,
     toggleSaveButton,
-
+    closeTask,
+    openTask,
+    closeList,
+    openList
   }
 })();
 

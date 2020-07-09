@@ -8,8 +8,8 @@ class TaskList {
     this.tasks.push(task);
   }
 
-  remove(taskName) {
-    this.tasks = tasks.filter( (e) => { return e.name !== taskName } )
+  remove(task) {
+    this.tasks = tasks.filter( (e) => { return e !== task } )
   }
 
   indexOf(item) {
