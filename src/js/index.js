@@ -45,6 +45,8 @@ const simplepicker = (function() {
 
 const eventController = (function()  {
 
+  var editing = false;
+
   listenForNewList();
   listenForSwitchLists();
   listenForNewTask();
@@ -129,8 +131,32 @@ const eventController = (function()  {
   }
 
   function listenForNotes() {
+    listenForEditNotes();
+    listenForAutoSave();
+  }
+
+  function listenForEditNotes() {
+    const $notes = document.getElementById("notes");
+    $notes.addEventListener("click", (e) => {
+      if (editing == false) {
+        editing = true;
+        displayController.toggleSaveButton();
+      }
+    })
+  }
+
+  function listenForSave() {
+    const $saveNotes = document.getElementById("saveNotes");
+    $saveNotes.addEventListener("click", (e) => {
+      editing = false;
+      displayController.saveNotes();
+    })
+  }
+
+  function listenForAutoSave() {
     const $notes = document.getElementById("notes");
     $notes.addEventListener("blur", (e) => {
+      editing = false;
       displayController.saveNotes();
     })
   }

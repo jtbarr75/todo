@@ -122,6 +122,23 @@ const displayController = (function() {
   function saveNotes() {
     var $notes = document.getElementById("notes");
     selectedTask.setNotes($notes.value);
+    // updateSaveButton("Saved");
+    displayController.toggleSaveButton();
+  }
+
+  function updateSaveButton(message) {
+    const $save = document.getElementById("saveNotes");
+    $save.textContent = message;
+    if (message == "Save Notes") {
+      $save.classList.add("yellow");
+    } else {
+      $save.classList.remove("yellow");
+    }
+  }
+
+  function toggleSaveButton() {
+    const $save = document.getElementById("saveNotes");
+    $save.classList.toggle("active");
   }
 
   function create(e) {
@@ -229,6 +246,8 @@ const displayController = (function() {
     renderDate,
     saveNotes,
     complete,
+    updateSaveButton,
+    toggleSaveButton,
 
   }
 })();
