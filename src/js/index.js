@@ -2,7 +2,6 @@ import simplepicker from "./simplePickerConfig";
 import displayController from "./displayController";
 import eventController from "./eventController";
 
-simplepicker.initialize();
 displayController.initialize();
+simplepicker.initialize(displayController);
 eventController.initialize(displayController);
-

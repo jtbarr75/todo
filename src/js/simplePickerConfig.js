@@ -2,7 +2,10 @@ import Simplepicker from 'simplepicker';
 
 const simplepicker = (function() {
 
-  function initialize() {
+  var displayController;
+
+  function initialize(display) {
+    displayController = display;
     const picker = createPicker();
     addOpenListener(picker);
     updateDateListener(picker);

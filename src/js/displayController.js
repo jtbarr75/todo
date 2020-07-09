@@ -9,11 +9,7 @@ const displayController = (function() {
   var selectedTask;
 
   function initialize(){
-    selectedList = new TaskList("Today");
-    selectedTask = new Task("Water Plants")
-    selectedList.add(selectedTask);
-    selectedList.add(new Task("Workout"));
-    lists = [selectedList, new TaskList("Work"), new TaskList("Personal")];
+    loadLists();
     renderLists();
     renderList();
     renderTask();
@@ -101,6 +97,7 @@ const displayController = (function() {
       message = "Today";
     }
     input.value = `Due ${message} at ${format(date, 'h:mm a')}`;
+    saveLists();
   }
 
   function clearDate() {
@@ -122,8 +119,8 @@ const displayController = (function() {
   function saveNotes() {
     var $notes = document.getElementById("notes");
     selectedTask.setNotes($notes.value);
-    // updateSaveButton("Saved");
     displayController.toggleSaveButton();
+    saveLists();
   }
 
   function updateSaveButton(message) {
@@ -178,6 +175,7 @@ const displayController = (function() {
 
   function addList(list) {
     lists.push(list);
+    saveLists();
     renderLists();
   }
 
@@ -208,6 +206,7 @@ const displayController = (function() {
 
   function addTask(name) {
     selectedList.add(new Task(name));
+    saveLists();
     renderList();
   }
 
@@ -227,6 +226,7 @@ const displayController = (function() {
     var task = selectedList.tasks[$button.id.substr(-1)]
     task.toggleCompleted();
     $button.classList.toggle("complete");
+    saveLists();
     renderList();
   }
 
@@ -236,11 +236,23 @@ const displayController = (function() {
   
   function loadLists() {
     if (localStorage.lists) {
-      listInfo = JSON.parse(localStorage.lists);
+      var listInfo = JSON.parse(localStorage.lists);
       for (let i=0; i<listInfo.length; i++) {
-        list = listInfo[i];
-        lists[i] = new TaskList(book.title, book.author, book.pages, book.read, book.description, book.flipped);
+        var list = listInfo[i];
+        lists[i] = new TaskList(list.name);
+        for (let j=0; j<list.tasks.length; j++) {
+          var task = list.tasks[j];
+          lists[i].add(new Task(task.name, task.date, task.notes, task.completed));
+        }
       }
+      selectedList = lists[0];
+      selectedTask = lists[0].tasks[0];
+    } else {
+      selectedList = new TaskList("Today");
+      selectedTask = new Task("Water Plants")
+      selectedList.add(selectedTask);
+      selectedList.add(new Task("Workout"));
+      lists = [selectedList, new TaskList("Work"), new TaskList("Personal")];
     }
   }
 

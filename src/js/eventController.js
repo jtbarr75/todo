@@ -109,14 +109,6 @@ const eventController = (function()  {
     })
   }
 
-  function listenForSave() {
-    const $saveNotes = document.getElementById("saveNotes");
-    $saveNotes.addEventListener("click", (e) => {
-      editing = false;
-      displayController.saveNotes();
-    })
-  }
-
   function listenForAutoSave() {
     const $notes = document.getElementById("notes");
     $notes.addEventListener("blur", (e) => {

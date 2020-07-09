@@ -1,7 +1,7 @@
 class Task {
-  constructor(name, date = null, notes = "", completed = false) {
+  constructor(name, date = "", notes = "", completed = false) {
     this.name = name;
-    this.tags = [];
+    this.date = Date.parse(date);
     this.notes = notes;
     this.completed = completed;
   }
@@ -14,13 +14,13 @@ class Task {
     this.name = n;
   }
 
-  addTag(tag){
-    this.tags.add(tag);
-  }
+  // addTag(tag){
+  //   this.tags.add(tag);
+  // }
 
-  removeTag(tag){
-    this.tags = tags.filter( (e) => { return e !== tag } )
-  }
+  // removeTag(tag){
+  //   this.tags = tags.filter( (e) => { return e !== tag } )
+  // }
 
   setNotes(n) {
     this.notes = n;
