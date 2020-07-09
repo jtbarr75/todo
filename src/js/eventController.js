@@ -18,6 +18,7 @@ const eventController = (function()  {
     listenForActions();
     listenForClose();
     listenForDelete();
+    listenForEdit();
   }
   
 
@@ -194,6 +195,35 @@ const eventController = (function()  {
     $deleteList.addEventListener("click", (e) => {
       displayController.deleteList();
       listenForSwitchLists();
+    })
+  }
+
+  function listenForEdit() {
+    listenForEditTask();
+    listenForEditList();
+  }
+
+  function addEditListener($edit) {
+    $edit.addEventListener("keyup", (e) => {
+      if (e.keyCode == "13") {
+        displayController.setTitle(e.target.parentElement, e.target.value);
+      }
+    })
+  }
+
+  function listenForEditTask() {
+    const $editTask = document.getElementById("editTask");
+    $editTask.addEventListener("click", () => {
+      const $edit = displayController.renderEdit("task");
+      addEditListener($edit);
+    })
+  }
+
+  function listenForEditList() {
+    const $editList = document.getElementById("editList");
+    $editList.addEventListener("click", () => {
+      const $edit = displayController.renderEdit("list");
+      addEditListener($edit);
     })
   }
 

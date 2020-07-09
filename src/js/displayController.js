@@ -292,6 +292,36 @@ const displayController = (function() {
     $menu.classList.add("open");
   }
 
+  function renderEdit(type) {
+    const $title = document.getElementById(`${type}Title`);
+    var text = $title.textContent;
+    $title.textContent = "";
+    const $edit = create({
+      type:   "input", 
+      parent: `#${type}Title`, 
+      id:  `${type}Edit` 
+    })
+    $edit.value = text;
+    $edit.focus();
+    return $edit
+  }
+
+  function setTitle($element, value) {
+    $element.textContent = value;
+    if ($element.id == "listTitle") {
+      selectedList.name = value;
+      deleteChildren(document.getElementById("lists"));
+      closeMenu("list");
+      renderLists();
+    } else if ($element.id == "taskTitle") {
+      selectedTask.name = value;
+      deleteChildren(document.getElementById("list"));
+      closeMenu("task");
+      renderList();
+    }
+    saveLists();
+  }
+
 
   // Save and Load
 
@@ -346,7 +376,8 @@ const displayController = (function() {
     deleteList,
     openMenu,
     closeMenu,
-
+    renderEdit,
+    setTitle,
   }
 })();
 
