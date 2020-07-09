@@ -12,7 +12,7 @@ const eventController = (function()  {
     listenForNewList();
     listenForSwitchLists();
     listenForNewTask();
-    listenForTasks();
+    listenForSwitchTasks();
     listenForNotes();
     listenForComplete();
     listenForActions();
@@ -54,7 +54,7 @@ const eventController = (function()  {
     $target.addEventListener("click", (e) => {
       displayController.selectList(e.target.id);
       listenForNewTask();
-      listenForTasks();
+      listenForSwitchTasks();
       listenForComplete();
     })
   }
@@ -77,13 +77,13 @@ const eventController = (function()  {
     const value = $newTaskInput.value;
     if (value.length !== 0 && !!value.trim()) {
       displayController.addTask(value);
-      listenForTasks();
+      listenForSwitchTasks();
       listenForComplete();
     }
     $newTaskInput.value = "";
   }
 
-  function listenForTasks() {
+  function listenForSwitchTasks() {
     var tasks = displayController.getTasks();
     for (let i=0; i<tasks.length; i++) {
       var $taskButton = document.getElementById(`task${i}`);
@@ -177,9 +177,23 @@ const eventController = (function()  {
   }
 
   function listenForDelete() {
+    listenForDeleteTask();
+    listenForDeleteList();
+  }
+
+  function listenForDeleteTask() {
     const $deleteTask = document.getElementById("deleteTask");
     $deleteTask.addEventListener("click", (e) => {
       displayController.deleteTask();
+      listenForSwitchTasks();
+    })
+  }
+
+  function listenForDeleteList() {
+    const $deleteList = document.getElementById("deleteList");
+    $deleteList.addEventListener("click", (e) => {
+      displayController.deleteList();
+      listenForSwitchLists();
     })
   }
 

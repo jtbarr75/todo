@@ -35,6 +35,12 @@ const displayController = (function() {
     }
   }
 
+  function deleteChildren($node) {
+    while($node.firstChild) {
+      $node.removeChild($node.lastChild);
+    }
+  }
+
   function renderList() {
     const $listTitle = document.getElementById("listTitle");
     $listTitle.textContent = selectedList.name;
@@ -251,6 +257,7 @@ const displayController = (function() {
     const $list = document.getElementById("listCard");
     $list.classList.remove("open");
     selectedList = "";
+    closeMenu("list");
     renderLists();
   }
 
@@ -260,10 +267,16 @@ const displayController = (function() {
   }
 
   function deleteTask() {
-    const $task = document.getElementById(`task${selectedList.indexOf(selectedTask)}`);
-    $task.parentElement.removeChild($task);
+    deleteChildren(document.getElementById("list"));
     selectedList.remove(selectedTask);
     closeTask();
+    saveLists();
+  }
+
+  function deleteList() {
+    deleteChildren(document.getElementById("lists"));
+    lists = lists.filter( (list) => { return (list != selectedList) } );
+    closeList();
     saveLists();
   }
 
@@ -301,9 +314,8 @@ const displayController = (function() {
       selectedTask = lists[0].tasks[0];
     } else {
       selectedList = new TaskList("Today");
-      selectedTask = new Task("Water Plants")
+      selectedTask = new Task("Example Task")
       selectedList.add(selectedTask);
-      selectedList.add(new Task("Workout"));
       lists = [selectedList, new TaskList("Work"), new TaskList("Personal")];
     }
   }
