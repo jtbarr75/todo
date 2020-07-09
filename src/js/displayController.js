@@ -230,6 +230,20 @@ const displayController = (function() {
     renderList();
   }
 
+  function saveLists() {
+    localStorage.lists = JSON.stringify(lists);
+  }
+  
+  function loadLists() {
+    if (localStorage.lists) {
+      listInfo = JSON.parse(localStorage.lists);
+      for (let i=0; i<listInfo.length; i++) {
+        list = listInfo[i];
+        lists[i] = new TaskList(book.title, book.author, book.pages, book.read, book.description, book.flipped);
+      }
+    }
+  }
+
 
   return {
     create,

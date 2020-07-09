@@ -1,9 +1,9 @@
 class Task {
-  constructor(name) {
+  constructor(name, date = null, notes = "", completed = false) {
     this.name = name;
     this.tags = [];
-    this.notes = "";
-    this.completed = false;
+    this.notes = notes;
+    this.completed = completed;
   }
 
   setDate(d) { 

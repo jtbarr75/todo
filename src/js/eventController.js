@@ -3,11 +3,11 @@ import TaskList from "./taskList";
 const eventController = (function()  {
 
   var editing;
-  const displayController;
+  var displayController;
 
-  function initialize(displayController) {
+  function initialize(display) {
     editing = false;
-    displayController = displayController;
+    displayController = display;
 
     listenForNewList();
     listenForSwitchLists();
