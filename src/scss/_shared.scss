@@ -94,3 +94,14 @@ $blue: #1e3888;
     background-color: $grey;
   }
 }
+
+// Icons 
+
+.material-icons {
+  font-size: 28px;
+  color: rgba($color: #fff, $alpha: 0.7);
+  &:hover {
+    cursor: pointer;
+    color: white;
+  }
+}

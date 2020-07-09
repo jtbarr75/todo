@@ -15,6 +15,7 @@ const eventController = (function()  {
     listenForTasks();
     listenForNotes();
     listenForComplete();
+    listenForActions();
   }
   
 
@@ -129,6 +130,32 @@ const eventController = (function()  {
     $target.addEventListener("click", (e) => {
       displayController.complete(e.target);
       e.stopPropagation();
+    })
+  }
+
+  function listenForActions() {
+    actionOpen("list");
+    actionOpen("task");
+    actionClose("list");
+    actionClose("task");
+  }
+
+  function actionOpen(type) {
+    const $actionButton = document.getElementById(`${type}Actions`);
+    $actionButton.addEventListener("click", () => {
+      const $menu = document.getElementById(`${type}Menu`);
+      $menu.classList.add("open");
+    })
+  }
+
+  function actionClose(type) {
+    document.addEventListener("click", (e) => {
+      const $menu = document.getElementById(`${type}Menu`);
+      if (e.target.parentElement.id != `${type}Menu` && e.target.id != `${type}Actions`) {
+        if ($menu.classList.contains("open")) {
+          $menu.classList.remove("open");
+        }
+      }
     })
   }
 

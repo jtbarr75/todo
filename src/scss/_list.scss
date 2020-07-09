@@ -7,18 +7,47 @@
   border-radius: 5px;
   position: relative;
   header {
+    height: 80px;
     background-color: $light-blue;
     color: white;
     border-bottom: 1px solid $grey;
     padding: 25px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20pt;
+    overflow: hidden;
+    position: relative;
   }
   footer {
      border-top: 1px solid $grey;
      position: absolute;
      bottom: 0;
      width: 100%;
+  }
+}
+
+.actions-menu {
+  display: flex;
+  visibility: hidden;
+  position: absolute;
+  height: 80px;
+  width: 200px;
+  padding: 24px;
+  top: 0;
+  right: 0;
+  background-color: inherit;
+  span {
+    width: 100px;
+    color: rgba($color: #fff, $alpha: 0.8);
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
+  &.open {
+    visibility: visible;
   }
 }
 
