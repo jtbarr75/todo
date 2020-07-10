@@ -207,6 +207,8 @@ const eventController = (function()  {
     $edit.addEventListener("keyup", (e) => {
       if (e.keyCode == "13") {
         displayController.setTitle(e.target.parentElement, e.target.value);
+        listenForSwitchLists();
+        listenForSwitchTasks();
       }
     })
   }
