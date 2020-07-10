@@ -276,10 +276,12 @@ const displayController = (function() {
   }
 
   function deleteList() {
-    deleteChildren(document.getElementById("lists"));
-    lists = lists.filter( (list) => { return (list != selectedList) } );
-    closeList();
-    saveLists();
+    if (confirm("Are you sure?")) {
+      deleteChildren(document.getElementById("lists"));
+      lists = lists.filter( (list) => { return (list != selectedList) } );
+      closeList();
+      saveLists();
+    }
   }
 
   function closeMenu(type) {
