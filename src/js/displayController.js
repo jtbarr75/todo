@@ -267,10 +267,12 @@ const displayController = (function() {
   }
 
   function deleteTask() {
-    deleteChildren(document.getElementById("list"));
-    selectedList.remove(selectedTask);
-    closeTask();
-    saveLists();
+    if (confirm("Are you sure?")) {
+      deleteChildren(document.getElementById("list"));
+      selectedList.remove(selectedTask);
+      closeTask();
+      saveLists();
+    }
   }
 
   function deleteList() {
