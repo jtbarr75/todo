@@ -12,9 +12,8 @@ const eventController = (function()  {
     listenForNewList();
     listenForSwitchLists();
     listenForNewTask();
-    listenForSwitchTasks();
+    listenForTaskActions();
     listenForNotes();
-    listenForComplete();
     listenForActions();
     listenForClose();
     listenForDelete();
@@ -55,8 +54,7 @@ const eventController = (function()  {
     $target.addEventListener("click", (e) => {
       displayController.selectList(e.target.id);
       listenForNewTask();
-      listenForSwitchTasks();
-      listenForComplete();
+      listenForTaskActions();
     })
   }
 
@@ -78,23 +76,32 @@ const eventController = (function()  {
     const value = $newTaskInput.value;
     if (value.length !== 0 && !!value.trim()) {
       displayController.addTask(value);
-      listenForSwitchTasks();
-      listenForComplete();
+      listenForTaskActions();
     }
     $newTaskInput.value = "";
   }
 
-  function listenForSwitchTasks() {
+  function listenForTaskActions() {
     var tasks = displayController.getTasks();
     for (let i=0; i<tasks.length; i++) {
       var $taskButton = document.getElementById(`task${i}`);
+      var $complete = document.getElementById(`complete${i}`);
       addTaskListener($taskButton);
+      addCompleteListener($complete);
     }
   }
 
   function addTaskListener($target) {
     $target.addEventListener("click", (e) => {
       displayController.selectTask(e.target.closest("li").id);
+    })
+  }
+
+  function addCompleteListener($target) {
+    $target.addEventListener("click", (e) => {
+      console.log(new Date);
+      displayController.complete(e.target);
+      e.stopPropagation();
     })
   }
 
@@ -118,21 +125,6 @@ const eventController = (function()  {
     $notes.addEventListener("blur", (e) => {
       editing = false;
       displayController.saveNotes();
-    })
-  }
-
-  function listenForComplete() {
-    var tasks = displayController.getTasks();
-    for (let i=0; i<tasks.length; i++) {
-      var $complete = document.getElementById(`complete${i}`);
-      addCompleteListener($complete);
-    }
-  }
-
-  function addCompleteListener($target) {
-    $target.addEventListener("click", (e) => {
-      displayController.complete(e.target);
-      e.stopPropagation();
     })
   }
 
@@ -186,7 +178,7 @@ const eventController = (function()  {
     const $deleteTask = document.getElementById("deleteTask");
     $deleteTask.addEventListener("click", (e) => {
       displayController.deleteTask();
-      listenForSwitchTasks();
+      listenForTaskActions();
     })
   }
 
@@ -207,9 +199,11 @@ const eventController = (function()  {
     $edit.addEventListener("keyup", (e) => {
       if (e.keyCode == "13") {
         displayController.setTitle(e.target.parentElement, e.target.value);
-        listenForSwitchLists();
-        listenForSwitchTasks();
-        listenForComplete();
+        if (e.target.id == "taskEdit") {
+          listenForTaskActions();
+        } else {
+          listenForSwitchLists();
+        }   
       }
     })
   }

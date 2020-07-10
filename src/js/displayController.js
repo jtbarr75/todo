@@ -204,10 +204,7 @@ const displayController = (function() {
   }
 
   function clearList() {
-    const $list = document.querySelector(".list");
-    while ($list.firstChild) {
-      $list.lastChild.remove();
-    }
+    deleteChildren(document.getElementById("list"));
   }
 
   function getLists() {
@@ -235,6 +232,7 @@ const displayController = (function() {
 
   function complete($button) {
     var task = selectedList.tasks[$button.id.substr(-1)]
+    console.log(task);
     task.toggleCompleted();
     $button.classList.toggle("complete");
     saveLists();
@@ -317,7 +315,7 @@ const displayController = (function() {
       renderLists();
     } else if ($element.id == "taskTitle") {
       selectedTask.name = value;
-      deleteChildren(document.getElementById("list"));
+      clearList();
       closeMenu("task");
       renderList();
     }
