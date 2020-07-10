@@ -1,10 +1,10 @@
-import Simplepicker from 'simplepicker';
+import Simplepicker from "simplepicker";
 
 const simplepicker = (function createSimplePicker() {
   let displayController;
 
   function createPicker() {
-    const taskCard = document.querySelector('#taskCard');
+    const taskCard = document.querySelector("#taskCard");
     const picker = new Simplepicker(taskCard, {
       zIndex: 10,
       compactMode: true,
@@ -13,15 +13,15 @@ const simplepicker = (function createSimplePicker() {
   }
 
   function addOpenListener(picker) {
-    const dueButton = document.getElementById('due');
-    dueButton.addEventListener('click', () => {
+    const dueButton = document.getElementById("due");
+    dueButton.addEventListener("click", () => {
       picker.reset(new Date());
       picker.open();
     });
   }
 
   function updateDateListener(picker) {
-    picker.on('submit', (date) => {
+    picker.on("submit", (date) => {
       displayController.renderDate(date);
     });
   }
@@ -36,6 +36,6 @@ const simplepicker = (function createSimplePicker() {
   return {
     initialize,
   };
-}());
+})();
 
 export default simplepicker;

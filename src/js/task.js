@@ -1,5 +1,5 @@
 class Task {
-  constructor(name, date = '', notes = '', completed = false) {
+  constructor(name, date = "", notes = "", completed = false) {
     this.name = name;
     this.date = Date.parse(date);
     this.notes = notes;
@@ -19,7 +19,7 @@ class Task {
   }
 
   toggleCompleted() {
-    this.completed = (!this.completed);
+    this.completed = !this.completed;
   }
 }
 
