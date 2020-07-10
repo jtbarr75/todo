@@ -41,7 +41,7 @@ const eventController = (function createEventController() {
     const $newTaskInput = document.getElementById("newTaskInput");
     const $newTaskButton = document.getElementById("newTaskButton");
     $newTaskInput.addEventListener("keyup", (e) => {
-      if (e.keyCode === "13") {
+      if (e.keyCode === 13) {
         addTask();
       }
     });
@@ -61,7 +61,7 @@ const eventController = (function createEventController() {
   function createListInput() {
     const $listInput = displayController.renderListInput();
     $listInput.addEventListener("keyup", (e) => {
-      if (e.keyCode === "13") {
+      if (e.keyCode === 13) {
         displayController.addList(new TaskList(e.target.value));
         displayController.clearInput();
         addListListener(document.getElementById("lists").lastChild);
@@ -177,7 +177,7 @@ const eventController = (function createEventController() {
 
   function addEditListener($edit) {
     $edit.addEventListener("keyup", (e) => {
-      if (e.keyCode === "13") {
+      if (e.keyCode === 13) {
         displayController.setTitle(e.target.parentElement, e.target.value);
         if (e.target.id === "taskEdit") {
           listenForTaskActions();
