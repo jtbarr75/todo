@@ -1,88 +1,160 @@
-import TaskList from "./taskList";
-import Task from "./task";
 import { format, isToday } from 'date-fns';
+import TaskList from './taskList';
+import Task from './task';
 
-const displayController = (function() {
-  
-  var lists = [];
-  var selectedList;
-  var selectedTask;
+const displayController = (function createEventController() {
+  let lists = [];
+  let selectedList;
+  let selectedTask;
 
-  function initialize(){
-    loadLists();
-    renderLists();
-    renderList();
-    renderTask();
+  function create(e) {
+    const $element = document.createElement(e.type);
+    if (typeof (e.text) === 'string') {
+      $element.textContent = e.text;
+    }
+    if (typeof (e.src) === 'string') {
+      $element.src = e.src;
+    }
+    if (typeof (e.id) === 'string') {
+      $element.id = e.id;
+    }
+    if (Array.isArray(e.class)) {
+      $element.classList.add(...e.class);
+    } else if (typeof (e.class) === 'string') {
+      $element.classList.add(e.class);
+    }
+    if (typeof (e.parent) === 'string') {
+      document.querySelector(e.parent).appendChild($element);
+    } else if (e.parent instanceof Element || e.parent instanceof HTMLDocument) {
+      e.parent.appendChild($element);
+    }
+
+    return $element;
   }
 
   function renderLists() {
-    for (let i=0; i<lists.length; i++) {
-      var $list = document.getElementById(`list${i}`);
+    for (let i = 0; i < lists.length; i += 1) {
+      let $list = document.getElementById(`list${i}`);
       if (!$list) {
         $list = create({
-          type:   "li", 
-          parent: "#lists", 
-          id:     `list${i}`, 
-          class:  "list-title", 
-          text:   lists[i].name
-        })
+          type: 'li',
+          parent: '#lists',
+          id: `list${i}`,
+          class: 'list-title',
+          text: lists[i].name,
+        });
       }
-      if (lists[i] == selectedList) {
-        $list.classList.add("selected");
-      } else if ($list.classList.contains("selected")) {
-        $list.classList.remove("selected");
+      if (lists[i] === selectedList) {
+        $list.classList.add('selected');
+      } else if ($list.classList.contains('selected')) {
+        $list.classList.remove('selected');
       }
     }
   }
 
   function deleteChildren($node) {
-    while($node.firstChild) {
+    while ($node.firstChild) {
       $node.removeChild($node.lastChild);
     }
   }
 
+  // Save and Load
+
+  function saveLists() {
+    localStorage.lists = JSON.stringify(lists);
+  }
+
+  function loadLists() {
+    if (localStorage.lists) {
+      const listInfo = JSON.parse(localStorage.lists);
+      for (let i = 0; i < listInfo.length; i += 1) {
+        const list = listInfo[i];
+        lists[i] = new TaskList(list.name);
+        for (let j = 0; j < list.tasks.length; j += 1) {
+          const task = list.tasks[j];
+          lists[i].add(new Task(task.name, task.date, task.notes, task.completed));
+        }
+      }
+      [selectedList] = lists;
+      [selectedTask] = lists[0].tasks;
+    } else {
+      selectedList = new TaskList('Today');
+      selectedTask = new Task('Example Task');
+      selectedList.add(selectedTask);
+      lists = [selectedList, new TaskList('Work'), new TaskList('Personal')];
+    }
+  }
+
   function renderList() {
-    const $listTitle = document.getElementById("listTitle");
+    const $listTitle = document.getElementById('listTitle');
     $listTitle.textContent = selectedList.name;
-    for (let i=0; i<selectedList.tasks.length; i++) {
-      var task = selectedList.tasks[i];
-      var $task = document.getElementById(`task${i}`);
+    for (let i = 0; i < selectedList.tasks.length; i += 1) {
+      const task = selectedList.tasks[i];
+      let $task = document.getElementById(`task${i}`);
       if (!$task) {
-          $task = create({
-          type: "li",
-          class: "list-task",
-          parent: ".list",
-          id: `task${i}`
+        $task = create({
+          type: 'li',
+          class: 'list-task',
+          parent: '.list',
+          id: `task${i}`,
         });
         create({
-          type: "button",
-          class: "complete-button",
+          type: 'button',
+          class: 'complete-button',
           parent: $task,
-          id: `complete${i}`
-        })
+          id: `complete${i}`,
+        });
         create({
-          type: "span",
+          type: 'span',
           parent: $task,
-          text: task.name
-        })
+          text: task.name,
+        });
       }
-      if (task == selectedTask) {
-        $task.classList.add("selected");
-      } else if ($task.classList.contains("selected")) {
-        $task.classList.remove("selected");
+      if (task === selectedTask) {
+        $task.classList.add('selected');
+      } else if ($task.classList.contains('selected')) {
+        $task.classList.remove('selected');
       }
       if (task.completed) {
-        $task.classList.add("complete");
-        $task.firstChild.classList.add("complete");
+        $task.classList.add('complete');
+        $task.firstChild.classList.add('complete');
       } else {
-        $task.classList.remove("complete");
-        $task.firstChild.classList.remove("complete");
+        $task.classList.remove('complete');
+        $task.firstChild.classList.remove('complete');
       }
     }
   }
 
+  function renderDate(date) {
+    selectedTask.setDate(date);
+    const input = document.querySelector('#due');
+    input.classList.add('set');
+    let message = format(date, 'MMMM d');
+    if (isToday(date)) {
+      message = 'Today';
+    }
+    input.value = `Due ${message} at ${format(date, 'h:mm a')}`;
+    saveLists();
+  }
+
+  function clearDate() {
+    const $input = document.querySelector('#due');
+    $input.classList.remove('set');
+    $input.value = 'Add a due date...';
+  }
+
+  function renderNotes() {
+    const $notes = document.getElementById('notes');
+    $notes.value = selectedTask.notes;
+  }
+
+  function clearNotes() {
+    const $notes = document.getElementById('notes');
+    $notes.value = '';
+  }
+
   function renderTask() {
-    const $taskTitle = document.getElementById("taskTitle");
+    const $taskTitle = document.getElementById('taskTitle');
     $taskTitle.textContent = selectedTask.name;
     if (selectedTask.date) {
       renderDate(selectedTask.date);
@@ -96,89 +168,36 @@ const displayController = (function() {
     }
   }
 
-  function renderDate(date) {
-    selectedTask.setDate(date);
-    var input = document.querySelector("#due");
-    input.classList.add("set");
-    var message = format(date, 'MMMM d');
-    if (isToday(date)) {
-      message = "Today";
-    }
-    input.value = `Due ${message} at ${format(date, 'h:mm a')}`;
-    saveLists();
-  }
-
-  function clearDate() {
-    var $input = document.querySelector("#due");
-    $input.classList.remove("set");
-    $input.value = "Add a due date...";
-  }
-
-  function renderNotes() {
-    var $notes = document.getElementById("notes");
-    $notes.value = selectedTask.notes;
-  }
-
-  function clearNotes() {
-    var $notes = document.getElementById("notes");
-    $notes.value = "";
-  }
-
   function saveNotes() {
-    var $notes = document.getElementById("notes");
+    const $notes = document.getElementById('notes');
     selectedTask.setNotes($notes.value);
     displayController.toggleSaveButton();
     saveLists();
   }
 
   function updateSaveButton(message) {
-    const $save = document.getElementById("saveNotes");
+    const $save = document.getElementById('saveNotes');
     $save.textContent = message;
-    if (message == "Save Notes") {
-      $save.classList.add("yellow");
+    if (message === 'Save Notes') {
+      $save.classList.add('yellow');
     } else {
-      $save.classList.remove("yellow");
+      $save.classList.remove('yellow');
     }
   }
 
   function toggleSaveButton() {
-    const $save = document.getElementById("saveNotes");
-    $save.classList.toggle("active");
-  }
-
-  function create(e) {
-    const $element = document.createElement(e.type);
-    if (typeof(e.text) == "string") {
-      $element.textContent = e.text;
-    }
-    if (typeof(e.src) == "string") {
-      $element.src = e.src
-    }
-    if (typeof(e.id) == "string") {
-      $element.id = e.id;
-    }
-    if (Array.isArray(e.class)) {
-      $element.classList.add(...e.class);
-    } else if (typeof(e.class) == "string") {
-      $element.classList.add(e.class);
-    }
-    if (typeof(e.parent) == "string"){
-      document.querySelector(e.parent).appendChild($element);
-    } else if (e.parent instanceof Element || e.parent instanceof HTMLDocument) {
-      e.parent.appendChild($element)
-    }
-    
-    return $element;
+    const $save = document.getElementById('saveNotes');
+    $save.classList.toggle('active');
   }
 
   function renderListInput() {
     const $input = create({
-      type:   "input", 
-      parent: "#lists", 
-      id:  "newListInput" 
-    })
+      type: 'input',
+      parent: '#lists',
+      id: 'newListInput',
+    });
     $input.focus();
-    return $input
+    return $input;
   }
 
   function addList(list) {
@@ -188,8 +207,51 @@ const displayController = (function() {
   }
 
   function clearInput() {
-    const $input = document.getElementById("newListInput");
+    const $input = document.getElementById('newListInput');
     $input.parentNode.removeChild($input);
+  }
+
+  function clearList() {
+    deleteChildren(document.getElementById('list'));
+  }
+
+  function closeMenu(type) {
+    const $menu = document.getElementById(`${type}Menu`);
+    if ($menu.classList.contains('open')) {
+      $menu.classList.remove('open');
+    }
+  }
+
+  function openMenu(type) {
+    const $menu = document.getElementById(`${type}Menu`);
+    $menu.classList.add('open');
+  }
+
+  function closeTask() {
+    const $task = document.getElementById('taskCard');
+    $task.classList.remove('open');
+    selectedTask = '';
+    closeMenu('task');
+    renderList();
+  }
+
+  function openTask() {
+    const $task = document.getElementById('taskCard');
+    $task.classList.add('open');
+  }
+
+  function closeList() {
+    closeTask();
+    const $list = document.getElementById('listCard');
+    $list.classList.remove('open');
+    selectedList = '';
+    closeMenu('list');
+    renderLists();
+  }
+
+  function openList() {
+    const $list = document.getElementById('listCard');
+    $list.classList.add('open');
   }
 
   function selectList(name) {
@@ -201,10 +263,6 @@ const displayController = (function() {
       closeTask();
       openList();
     }
-  }
-
-  function clearList() {
-    deleteChildren(document.getElementById("list"));
   }
 
   function getLists() {
@@ -231,129 +289,66 @@ const displayController = (function() {
   }
 
   function complete($button) {
-    var task = selectedList.tasks[$button.id.substr(-1)]
-    console.log(task);
+    const task = selectedList.tasks[$button.id.substr(-1)];
     task.toggleCompleted();
-    $button.classList.toggle("complete");
+    $button.classList.toggle('complete');
     saveLists();
     renderList();
   }
 
-  function closeTask() {
-    const $task = document.getElementById("taskCard");
-    $task.classList.remove("open");
-    selectedTask = "";
-    closeMenu("task");
-    renderList();
-  }
-
-  function openTask() {
-    const $task = document.getElementById("taskCard");
-    $task.classList.add("open");
-  }
-
-  function closeList() {
-    closeTask();
-    const $list = document.getElementById("listCard");
-    $list.classList.remove("open");
-    selectedList = "";
-    closeMenu("list");
-    renderLists();
-  }
-
-  function openList() {
-    const $list = document.getElementById("listCard");
-    $list.classList.add("open");
-  }
-
   function deleteTask() {
-    if (confirm("Are you sure?")) {
-      deleteChildren(document.getElementById("list"));
-      selectedList.remove(selectedTask);
-      closeTask();
-      saveLists();
-    }
+    deleteChildren(document.getElementById('list'));
+    selectedList.remove(selectedTask);
+    closeTask();
+    saveLists();
   }
 
   function deleteList() {
-    if (confirm("Are you sure?")) {
-      deleteChildren(document.getElementById("lists"));
-      lists = lists.filter( (list) => { return (list != selectedList) } );
-      closeList();
-      saveLists();
-    }
-  }
-
-  function closeMenu(type) {
-    const $menu = document.getElementById(`${type}Menu`);
-    if ($menu.classList.contains("open")) {
-      $menu.classList.remove("open");
-    }
-  }
-
-  function openMenu(type) {
-    const $menu = document.getElementById(`${type}Menu`);
-    $menu.classList.add("open");
+    deleteChildren(document.getElementById('lists'));
+    lists = lists.filter((list) => (list !== selectedList));
+    closeList();
+    saveLists();
   }
 
   function renderEdit(type) {
     const $title = document.getElementById(`${type}Title`);
-    var text = $title.textContent;
-    $title.textContent = "";
+    const text = $title.textContent;
+    $title.textContent = '';
     const $edit = create({
-      type:   "input", 
-      parent: `#${type}Title`, 
-      id:  `${type}Edit` 
-    })
+      type: 'input',
+      parent: `#${type}Title`,
+      id: `${type}Edit`,
+    });
     $edit.value = text;
     $edit.focus();
-    return $edit
+    return $edit;
   }
 
+  // Sets the title of the passed element to given value
+  // Uses cached lookup of $element
   function setTitle($element, value) {
+    // eslint-disable-next-line no-param-reassign
     $element.textContent = value;
-    if ($element.id == "listTitle") {
+    if ($element.id === 'listTitle') {
       selectedList.name = value;
-      deleteChildren(document.getElementById("lists"));
-      closeMenu("list");
+      deleteChildren(document.getElementById('lists'));
+      closeMenu('list');
       renderLists();
-    } else if ($element.id == "taskTitle") {
+    } else if ($element.id === 'taskTitle') {
       selectedTask.name = value;
       clearList();
-      closeMenu("task");
+      closeMenu('task');
       renderList();
     }
     saveLists();
   }
 
-
-  // Save and Load
-
-  function saveLists() {
-    localStorage.lists = JSON.stringify(lists);
+  function initialize() {
+    loadLists();
+    renderLists();
+    renderList();
+    renderTask();
   }
-  
-  function loadLists() {
-    if (localStorage.lists) {
-      var listInfo = JSON.parse(localStorage.lists);
-      for (let i=0; i<listInfo.length; i++) {
-        var list = listInfo[i];
-        lists[i] = new TaskList(list.name);
-        for (let j=0; j<list.tasks.length; j++) {
-          var task = list.tasks[j];
-          lists[i].add(new Task(task.name, task.date, task.notes, task.completed));
-        }
-      }
-      selectedList = lists[0];
-      selectedTask = lists[0].tasks[0];
-    } else {
-      selectedList = new TaskList("Today");
-      selectedTask = new Task("Example Task")
-      selectedList.add(selectedTask);
-      lists = [selectedList, new TaskList("Work"), new TaskList("Personal")];
-    }
-  }
-
 
   return {
     create,
@@ -382,7 +377,7 @@ const displayController = (function() {
     closeMenu,
     renderEdit,
     setTitle,
-  }
-})();
+  };
+}());
 
 export default displayController;
