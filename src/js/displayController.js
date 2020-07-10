@@ -73,8 +73,10 @@ const displayController = (function() {
       }
       if (task.completed) {
         $task.classList.add("complete");
+        $task.firstChild.classList.add("complete");
       } else {
         $task.classList.remove("complete");
+        $task.firstChild.classList.remove("complete");
       }
     }
   }

@@ -209,6 +209,7 @@ const eventController = (function()  {
         displayController.setTitle(e.target.parentElement, e.target.value);
         listenForSwitchLists();
         listenForSwitchTasks();
+        listenForComplete();
       }
     })
   }
