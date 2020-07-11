@@ -348,6 +348,13 @@ const displayController = (function createEventController() {
     saveLists();
   }
 
+  function toggleSidebar() {
+    const $sidebar = document.querySelector(".sidebar");
+    const $sidebarButton = document.getElementById("toggleSidebar");
+    $sidebar.classList.toggle("open");
+    $sidebarButton.classList.toggle("open");
+  }
+
   function initialize() {
     loadLists();
     renderLists();
@@ -382,6 +389,7 @@ const displayController = (function createEventController() {
     closeMenu,
     renderEdit,
     setTitle,
+    toggleSidebar,
   };
 })();
 

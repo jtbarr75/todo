@@ -9,72 +9,78 @@
 </head>
 <body>
   <div id="main">
-    <nav class="sidebar">
-      <header>
+    <div class="sidebar-wrapper">
+      <header class="main-header">
         <h1 class="sidebar-title selected">Lists</h1>
-        <button id="newListButton" class="add-button">+</button>
+        <span id="toggleSidebar" class="material-icons">chevron_right</span>
       </header>
-      <ul id="lists">
-      </ul>
-    </nav>
-    <div class="content">
-      <div id="listCard" class="card open">
-        <header>
-          <h1 id="listTitle" class="card-title"></h1>
-          <div class="icons">
-            <span id="listActions" class="material-icons">more_horiz</span>
-            <span id="closeList" class="material-icons">close</span>
-          </div>
-          <div id="listMenu" class="actions-menu">
-            <span id="editList" class="action-button">Edit</span>
-            <span id="deleteList" class="action-button">Delete</span>
-          </div>
-        </header>
-        <ul id="list" class="list">
+      <nav class="sidebar open">
+        <div class="lists-title"><button id="newListButton" class="add-button">+</button>Add List</div>
+        <ul id="lists">
         </ul>
-        <footer>
-          <div class="input-group">
-            <input type="text" id="newTaskInput" placeholder="Add a task...">
-            <button id="newTaskButton" class="add-button">+</button>
-          </div>
-        </footer>
-      </div>
-      <div id="taskCard" class="card open">
-        <header>
-          <h1 id="taskTitle" class="card-title"></h1>
-          <div class="icons">
-            <span id="taskActions" class="material-icons">more_horiz</span>
-            <span id="closeTask" class="material-icons">close</span>
-          </div>
-          <div id="taskMenu" class="actions-menu">
-            <span id="editTask" class="action-button">Edit</span>
-            <span id="deleteTask" class="action-button">Delete</span>
-          </div>
-        </header>
-        <!-- Tags 
-        <ul class="tags">
-          <li class="lt-green">
-            <span class="tag-text">Plants</span>
-            <span class="remove-tag">x</span>
-          </li>
-          <li class="blue">
-            <span class="tag-text">Chores</span>
-            <span class="remove-tag">x</span>
-          </li>
-          <li id="addTag">
-            <span class="tag-text">Add Tag</span>
-          </li>
-        </ul> -->
-        <div class="task-info">
-          <input type="button" id="due" class="task-input" value="Add a due date...">
-          <div id="date"></div>
-          <textarea type="textarea" id="notes" class="task-input" placeholder="Add notes..." wrap="soft"></textarea>
-          <div class="task-buttons">
-            <button id="saveNotes" class="task-button">Save</button>
+      </nav>
+    </div>
+    <div class="wrapper">
+      <div class="content">
+        <div id="listCard" class="card open">
+          <header>
+            <h1 id="listTitle" class="card-title"></h1>
+            <div class="icons">
+              <span id="listActions" class="material-icons">more_horiz</span>
+              <span id="closeList" class="material-icons">close</span>
+            </div>
+            <div id="listMenu" class="actions-menu">
+              <span id="editList" class="action-button">Edit</span>
+              <span id="deleteList" class="action-button">Delete</span>
+            </div>
+          </header>
+          <ul id="list" class="list">
+          </ul>
+          <footer>
+            <div class="input-group">
+              <input type="text" id="newTaskInput" placeholder="Add a task...">
+              <button id="newTaskButton" class="add-button">+</button>
+            </div>
+          </footer>
+        </div>
+        <div id="taskCard" class="card open">
+          <header>
+            <h1 id="taskTitle" class="card-title"></h1>
+            <div class="icons">
+              <span id="taskActions" class="material-icons">more_horiz</span>
+              <span id="closeTask" class="material-icons">close</span>
+            </div>
+            <div id="taskMenu" class="actions-menu">
+              <span id="editTask" class="action-button">Edit</span>
+              <span id="deleteTask" class="action-button">Delete</span>
+            </div>
+          </header>
+          <!-- Tags 
+          <ul class="tags">
+            <li class="lt-green">
+              <span class="tag-text">Plants</span>
+              <span class="remove-tag">x</span>
+            </li>
+            <li class="blue">
+              <span class="tag-text">Chores</span>
+              <span class="remove-tag">x</span>
+            </li>
+            <li id="addTag">
+              <span class="tag-text">Add Tag</span>
+            </li>
+          </ul> -->
+          <div class="task-info">
+            <input type="button" id="due" class="task-input" value="Add a due date...">
+            <div id="date"></div>
+            <textarea type="textarea" id="notes" class="task-input" placeholder="Add notes..." wrap="soft"></textarea>
+            <div class="task-buttons">
+              <button id="saveNotes" class="task-button">Save</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    
   </div>
   <script src="main.js"></script>
 </body>

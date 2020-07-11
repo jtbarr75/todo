@@ -209,6 +209,13 @@ const eventController = (function createEventController() {
     listenForEditList();
   }
 
+  function listenForSidebar() {
+    const $toggleSidebar = document.getElementById("toggleSidebar");
+    $toggleSidebar.addEventListener("click", () => {
+      displayController.toggleSidebar();
+    })
+  }
+
   function initialize(display) {
     editing = false;
     displayController = display;
@@ -222,6 +229,7 @@ const eventController = (function createEventController() {
     listenForClose();
     listenForDelete();
     listenForEdit();
+    listenForSidebar();
   }
 
   return {
